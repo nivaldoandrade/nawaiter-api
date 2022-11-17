@@ -12,6 +12,7 @@ mongoose.connect('mongodb://localhost:27017/nawaiter')
 		const port = 3333;
 
 		app.use(express.json());
+		app.use('/upload', express.static('uploads'));
 		app.use(router);
 
 		app.use((err: Error, request: Request, response: Response, _next: NextFunction) => {
