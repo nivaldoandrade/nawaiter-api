@@ -34,12 +34,12 @@ class ProductsController {
 	public async update(request: Request, response: Response) {
 		const { id } = request.params;
 		const { name, description, price, ingredients, category } = request.body;
-		const imagePath = request.file?.filename;
 
-		const product = await updateProductService.execute({ id, name, description, imagePath, price, ingredients, category });
+		const product = await updateProductService.execute({ id, name, description, price, ingredients, category });
 
 		return response.status(200).json(product);
 	}
+
 }
 
 

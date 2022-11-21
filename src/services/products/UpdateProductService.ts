@@ -6,7 +6,6 @@ interface IRequest {
 	id: string;
 	name: string;
 	description?: string;
-	imagePath?: string;
 	price: string;
 	ingredients: string;
 	category: ObjectId;
@@ -20,7 +19,7 @@ interface IIngredients {
 class UpdateProductService {
 
 
-	public async execute({ id, name, description, imagePath, price, ingredients, category }: IRequest) {
+	public async execute({ id, name, description, price, ingredients, category }: IRequest) {
 
 		if (!name) {
 			throw new AppError('Name is required');
@@ -43,7 +42,7 @@ class UpdateProductService {
 		});
 
 
-		const product = await Product.findByIdAndUpdate(id, { name, description, imagePath, price, ingredientsParsed: ingredients, category }, { new: true });
+		const product = await Product.findByIdAndUpdate(id, { name, description, price, ingredientsParsed: ingredients, category }, { new: true });
 
 		if (!product) {
 			throw new AppError('Product is not found', 404);
