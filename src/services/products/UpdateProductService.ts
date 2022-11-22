@@ -7,7 +7,7 @@ interface IRequest {
 	name: string;
 	description?: string;
 	price: string;
-	ingredients: string;
+	ingredients: IIngredients[];
 	category: ObjectId;
 }
 
@@ -33,16 +33,14 @@ class UpdateProductService {
 			throw new AppError('Category is required');
 		}
 
-		const ingredientsParsed: IIngredients[] = JSON.parse(ingredients);
-
-		ingredientsParsed.forEach(ingredient => {
+		ingredients.forEach(ingredient => {
 			if (!ingredient.name) {
 				throw new AppError('Ingredient name is required');
 			}
 		});
 
 
-		const product = await Product.findByIdAndUpdate(id, { name, description, price, ingredientsParsed: ingredients, category }, { new: true });
+		const product = await Product.findByIdAndUpdate(id, { name, description, price, ingredients, category }, { new: true });
 
 		if (!product) {
 			throw new AppError('Product is not found', 404);
