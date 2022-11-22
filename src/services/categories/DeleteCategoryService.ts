@@ -1,6 +1,7 @@
 import { isValidObjectId } from 'mongoose';
 import AppError from '../../errors/AppError';
 import { Category } from '../../models/Category';
+import { Product } from '../../models/Product';
 
 
 class DeleteCategoryService {
@@ -9,6 +10,12 @@ class DeleteCategoryService {
 
 		if (!isValidObjectId(id)) {
 			throw new AppError('CategoryId is invalid');
+		}
+
+		const productByCategory = await Product.find({ category: id }, null, { limit: 1 });
+
+		if (productByCategory.length === 1) {
+			throw new AppError('The category is being used');
 		}
 
 		const category = await Category.findByIdAndDelete(id);
