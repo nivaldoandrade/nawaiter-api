@@ -4,6 +4,7 @@ import { Product } from '../../models/Product';
 import createProductService from '../../services/products/CreateProductService';
 import showProductService from '../../services/products/ShowProductService';
 import updateProductService from '../../services/products/UpdateProductService';
+import deleteProductService from '../../services/products/DeleteProductService';
 
 class ProductsController {
 
@@ -38,6 +39,14 @@ class ProductsController {
 		const product = await updateProductService.execute({ id, name, description, price, ingredients, category });
 
 		return response.status(200).json(product);
+	}
+
+	public async delete(request: Request, response: Response) {
+		const { id } = request.params;
+
+		await deleteProductService.execute(id);
+
+		return response.status(204).json();
 	}
 
 }
