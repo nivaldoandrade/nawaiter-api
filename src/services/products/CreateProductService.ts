@@ -33,13 +33,17 @@ class CreateProductService {
 			throw new AppError('Category is required');
 		}
 
-		const ingredientsParsed: IIngredients[] = JSON.parse(ingredients);
+		let ingredientsParsed: IIngredients[] = [];
 
-		ingredientsParsed.forEach(ingredient => {
-			if (!ingredient.name) {
-				throw new AppError('Ingredient name is required');
-			}
-		});
+		if (ingredients) {
+			ingredientsParsed = JSON.parse(ingredients);
+		}
+
+		// ingredientsParsed.forEach(ingredient => {
+		// 	if (!ingredient.name) {
+		// 		throw new AppError('Ingredient name is required');
+		// 	}
+		// });
 
 
 		const product = await Product.create({ name, description, imagePath, price, ingredients: ingredientsParsed, category });

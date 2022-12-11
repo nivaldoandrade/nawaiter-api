@@ -33,11 +33,11 @@ class UpdateProductService {
 			throw new AppError('Category is required');
 		}
 
-		ingredients.forEach(ingredient => {
-			if (!ingredient.name) {
-				throw new AppError('Ingredient name is required');
-			}
-		});
+		// ingredients.forEach(ingredient => {
+		// 	if (!ingredient.name) {
+		// 		throw new AppError('Ingredient name is required');
+		// 	}
+		// });
 
 
 		const product = await Product.findByIdAndUpdate(id, { name, description, price, ingredients, category }, { new: true });
