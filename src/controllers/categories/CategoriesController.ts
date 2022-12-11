@@ -3,6 +3,7 @@ import { Category } from '../../models/Category';
 
 import CreateCategoryService from '../../services/categories/CreateCategoryService';
 import ShowCategoryService from '../../services/categories/ShowCategoryService';
+import ListProductsByCategoryService from '../../services/categories/ListProductsByCategoryService';
 import UpdateCategoryService from '../../services/categories/UpdateCategoryService';
 import DeleteCategoryService from '../../services/categories/DeleteCategoryService';
 
@@ -21,6 +22,14 @@ export default class CategoriesController {
 		const category = await ShowCategoryService.execute(id);
 
 		return response.json(category);
+	}
+
+	public async listProductsByCategory(request: Request, response: Response) {
+		const { categoryId } = request.params;
+
+		const products = await ListProductsByCategoryService.execute(categoryId);
+
+		return response.json(products);
 	}
 
 	public async create(request: Request, response: Response) {

@@ -20,6 +20,7 @@ const ordersController = new OrdersController();
 //CATEGORY
 router.get('/categories', categoriesController.list);
 router.get('/categories/:id', categoriesController.show);
+router.get('/categories/:categoryId/products', categoriesController.listProductsByCategory);
 router.post('/categories', categoriesController.create);
 router.put('/categories/:id', categoriesController.update);
 router.delete('/categories/:id', categoriesController.delete);
