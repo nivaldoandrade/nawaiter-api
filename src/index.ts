@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import mongoose from 'mongoose';
 
+import cors from './middlewares/cors';
+
 import router from './routes';
 
 import AppError from './errors/AppError';
@@ -11,6 +13,7 @@ mongoose.connect('mongodb://localhost:27017/nawaiter')
 		const app = express();
 		const port = 3333;
 
+		app.use(cors);
 		app.use(express.json());
 		app.use('/upload', express.static('uploads'));
 		app.use(router);
