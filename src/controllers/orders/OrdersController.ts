@@ -11,7 +11,7 @@ import doneStatusService from '../../services/orders/DoneStatusService';
 class OrdersController {
 
 	public async list(request: Request, response: Response) {
-		const orders = await Order.find();
+		const orders = await Order.find().populate('products.product');
 
 		return response.json(orders);
 	}
