@@ -3,10 +3,11 @@ import { Request, Response } from 'express';
 import { Order } from '../../models/Order';
 
 import createOrderService from '../../services/orders/CreateOrderService';
-import updateOrderService from '../../services/orders/UpdateOrderService';
-import showOrderService from '../../services/orders/ShowOrderService';
-import productionStatusService from '../../services/orders/ProductionStatusService';
+import deleteOrderService from '../../services/orders/DeleteOrderService';
 import doneStatusService from '../../services/orders/DoneStatusService';
+import productionStatusService from '../../services/orders/ProductionStatusService';
+import showOrderService from '../../services/orders/ShowOrderService';
+import updateOrderService from '../../services/orders/UpdateOrderService';
 
 class OrdersController {
 
@@ -56,6 +57,14 @@ class OrdersController {
 		await doneStatusService.execute(id);
 
 		return response.json();
+	}
+
+	public async delete(request: Request, response: Response) {
+		const { id } = request.params;
+
+		await deleteOrderService.execute(id);
+
+		return response.status(204).json();
 	}
 
 }

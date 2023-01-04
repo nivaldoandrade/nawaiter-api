@@ -5,9 +5,9 @@ import multerConfig from './config/multer';
 
 
 import CategoriesController from './controllers/categories/CategoriesController';
-import ProductsController from './controllers/products/ProductsController';
-import ProductImageController from './controllers/products/ProductImageController';
 import OrdersController from './controllers/orders/OrdersController';
+import ProductImageController from './controllers/products/ProductImageController';
+import ProductsController from './controllers/products/ProductsController';
 
 const router = express.Router();
 const upload = multer(multerConfig);
@@ -40,5 +40,6 @@ router.post('/orders', ordersController.create);
 router.put('/orders/:id', ordersController.update);
 router.put('/orders/:id/production', ordersController.productionStatus);
 router.put('/orders/:id/done', ordersController.doneStatus);
+router.delete('/orders/:id', ordersController.delete);
 
 export default router;
