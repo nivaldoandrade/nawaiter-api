@@ -1,5 +1,7 @@
 import { ObjectId } from 'mongoose';
 
+import { io } from '../../index';
+
 import { Order } from '../../models/Order';
 
 import AppError from '../../errors/AppError';
@@ -27,8 +29,9 @@ class CreateOrderService {
 			throw new AppError('The order must have at least one product');
 		}
 
-		const order = Order.create({ table, products });
+		const order = await (await Order.create({ table, products })).populate('products.product');
 
+		io.emit('newOrder', order);
 
 		return order;
 	}

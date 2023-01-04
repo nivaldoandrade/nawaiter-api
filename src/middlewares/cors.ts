@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 
-export default (request: Request, response: Response, next: NextFunction) => {
-	const allowedOrigins = [
-		'http://localhost:5173',
-		'http://localhost:4173',
-	];
+export const allowedOrigins = [
+	'http://localhost:5173',
+	'http://localhost:4173',
+];
 
+export default (request: Request, response: Response, next: NextFunction) => {
 	const origin = request.header('origin');
 
 	if (origin) {

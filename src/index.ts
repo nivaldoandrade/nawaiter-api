@@ -1,18 +1,28 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import mongoose from 'mongoose';
+import { createServer } from 'node:http';
+import { Server } from 'socket.io';
 
-import cors from './middlewares/cors';
+import cors, { allowedOrigins } from './middlewares/cors';
 
 import router from './routes';
 
 import AppError from './errors/AppError';
 
+const port = 3333;
+
+const app = express();
+const httpServer = createServer(app);
+export const io = new Server(httpServer, {
+	cors: {
+		origin: allowedOrigins
+	}
+});
+
+
 mongoose.connect('mongodb://localhost:27017/nawaiter')
 	.then(() => {
-		const app = express();
-		const port = 3333;
-
 		app.use(cors);
 		app.use(express.json());
 		app.use('/upload', express.static('uploads'));
@@ -35,7 +45,7 @@ mongoose.connect('mongodb://localhost:27017/nawaiter')
 			});
 		});
 
-		app.listen(port, () => {
+		httpServer.listen(port, () => {
 			console.log(`🚀 Server is running on http://localhost:${port}`);
 		});
 	}).catch((error) => {
